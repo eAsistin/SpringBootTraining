@@ -1,6 +1,7 @@
 package com.example.demo.student;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table
@@ -26,6 +28,7 @@ public class Student {
 	private long id;
 	private String name;
 	private String email;
+	@Transient
 	private int age;
 	private LocalDate DOB;
 	
@@ -35,22 +38,20 @@ public class Student {
 	}
 	
 	
-	public Student(long id, String name, String email, int age, LocalDate dOB) {
+	public Student(long id, String name, String email,  LocalDate dOB) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
-		this.age = age;
 		DOB = dOB;
 	}
 	
 	
 
-	public Student(String name, String email, int age, LocalDate dOB) {
+	public Student(String name, String email,  LocalDate dOB) {
 		super();
 		this.name = name;
 		this.email = email;
-		this.age = age;
 		DOB = dOB;
 	}
 
@@ -70,7 +71,7 @@ public class Student {
 	}
 	
 	public int getAge() {
-		return age;
+		return Period.between(this.DOB, LocalDate.now()).getYears();
 	}
 	public void setAge(int age) {
 		this.age = age;
